@@ -1,0 +1,23 @@
+{
+  "name": "cornhacks202",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andy7809/theFutureIsNow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andy7809/theFutureIsNow/issues"
+  },
+  "homepage": "https://github.com/andy7809/theFutureIsNow#readme"
+}
