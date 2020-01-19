@@ -19,7 +19,17 @@
 }
 #hi{
   font-family: Arial;
-  width: 100px;
+  width: 50px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+
+  cursor: pointer;
+
+}
+#hi2{
+  font-family: Arial;
+  width: 50px;
   font-size: 18px;
   padding: 10px;
   border: none;
@@ -80,7 +90,9 @@ body {
 </center>
   <p id = "bodyText">
 See climate changes' effect on the past and the present on your particular location. Then, see your possible future</p>
-<input type = "text" value = "Enter zip" id="hi">
+<input type = "text" value = "Lat" id="hi">
+<input type = "text" value = "Long" id="hi2">
+
 <input type = "text" value = "Enter city"  id="hit">
 
   <button id="myBtn" onclick="myFunction()">Get Started </button>
@@ -90,13 +102,15 @@ See climate changes' effect on the past and the present on your particular locat
 
 // source.setAttribute('src', 'rain.mp4');
 
-
-  var zip;
+  var lat;
+  var long;
   var city;
 function myFunction() {
-   zip = document.getElementById("hi").value;
+   lat = document.getElementById("hi").value;
+   long = document.getElementById("hi2").value;
+
    city = document.getElementById("hit").value;
-   var queryString = "?" + zip + "&" + city;
+   var queryString = "?" + lat + "&"+ long+ "&" + city;
    window.location.href = "vidB.html" + queryString;
 }
 function load(){
