@@ -75,13 +75,16 @@ var body = document.getElementById("bodyText");
 // source.setAttribute('src', 'rain.mp4');
 var x = 0;
 var city = "Omaha";
+var long;
+var lat;
+
 var d = new Date();
 var year = d.getFullYear();;
 var pastOffset = 20;
 var futureOffset = 16;
 
-var rainfall = 0;
-var temp = 0;
+var rainfall = 54;
+var temper = 36;
 
 
 function myFunction() {
@@ -92,12 +95,18 @@ function myFunction() {
 
 if(x==1){
   title.innerHTML = "Average temperature for " + city + " in " + (year);
-
-
+  if(temper > 35){
+    video.src = "HighTemp.mp4";
+  }
+  else{
+      video.src = "daisy.mp4";
+  }
 }
 if(x==2){
   title.innerHTML = "Average precipitation for " + city + " in " + (year);
-
+  if(rainfall> avPrecip+.2){
+    video.src = "HighRain.mp4";
+  }
 }
 if (x==3){
   title.innerHTML = "Average temperature for " + city + " in " + (year+futureOffset);
@@ -117,9 +126,10 @@ function load(){
   var queryString = decodeURIComponent(window.location.search);
   queryString = queryString.substring(1);
   var queries = queryString.split("&");
-  city = queries[1];
-  zip = queries[0];
-  console.log(city + " " + zip);
+  city = queries[2];
+  long = queries[1];
+  lat = queries[0];
+  console.log(long+ " " + lat + " " + city);
 
   var title = document.getElementById("title");
   title.innerHTML = "Average rainfall for " + city + " in " + (year-pastOffset);
