@@ -1,12 +1,5 @@
 const fetch = require('node-fetch');
 const apiKey = 'PepooszebntFrjLfNhGJzDYYRDqrObwm'
-var avg = 0;
-
-  // getData("https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets?data").then(function(u){ return u.json();}
-  // ).then(
-  //   function(json){
-  //     console.log(json);
-  //   });
 
 function main()
 {
