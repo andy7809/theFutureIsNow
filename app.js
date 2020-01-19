@@ -1,23 +1,17 @@
 const fetch = require('node-fetch');
 const apiKey = 'PepooszebntFrjLfNhGJzDYYRDqrObwm'
 
-function main()
+function main(year='', lat='', long='')
 {
   getStationsForYear(2000, 41, -96).then(
     function(json){
       stationArray = getStationArray(json);
       getSizedArray(stationArray, 2000).then(function(sizedArrays){
-        console.log(sizedArrays);
+        return [centToInch(averageArray(sizedArrays[0])), celcToF(averageArray(sizedArrays[0]))];
       });
+    }).catch(function() {
+      console.log("Uh oh spaghettios");
     });
-  // getData(2018, 61240, 'PRCP').then(
-  //   function(json){
-  //     console.log(json);
-  // });
-  // getData(2018, 6007, 'TAVG').then(
-  //   function(json){
-  //     console.log(json);
-  // });
 }
 
 async function getSizedArray(stationArray = '', year)
@@ -79,6 +73,7 @@ function parseJSON(json)
   var arr = [];
   for(i = 0; i < json['results'].length; i++)
   {
+    //console.log(json['results'][i]['value']);
     arr[arr.length] = json['results'][i]['value'];
   }
   return averageArray(arr);
@@ -86,11 +81,12 @@ function parseJSON(json)
 
 function averageArray(option){
   var answer = 0;
-  var len = option.length;
+  var len = option[0].length;
   for( i = 0; i<len; i++){
-    answer+= option[i];
+    //console.log(option[0][i]);
+    answer+= option[0][i];
   }
-  return (answer / option.length);
+  return (answer / len);
 }
 
 async function getStationsForYear(year = '', lat = '', long = '')
@@ -116,6 +112,13 @@ async function getData(yearBorn = '', dataType = '', stationId = '') {
     }
   });
   return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+function centToInch(obj){
+  return(obj /2.54);
+}
+function celcToF(obj){
+  return(obj*(9/5)) + 32;
 }
 
 main();
