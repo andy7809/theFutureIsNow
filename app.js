@@ -10,7 +10,7 @@ var avg = 0;
 
 function main()
 {
-  getData(2018, 61240, 'PRCP').then(
+  getData(2018, 60508, 'PRCP').then(
     function(json){
       console.log(avg = parseJSON(json));
   });
