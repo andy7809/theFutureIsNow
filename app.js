@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const apiKey = 'PepooszebntFrjLfNhGJzDYYRDqrObwm'
+var avg = 0;
 
   // getData("https://www.ncdc.noaa.gov/cdo-web/api/v2/datasets?data").then(function(u){ return u.json();}
   // ).then(
@@ -9,25 +10,37 @@ const apiKey = 'PepooszebntFrjLfNhGJzDYYRDqrObwm'
 
 function main()
 {
-  //getAverageTempList(2018, );
-  getData(2018, 61240).then(
+  getData(2018, 61240, 'PRCP').then(
     function(json){
-         console.log(json['results']);
-       });;
+      console.log(avg = parseJSON(json));
+  });
+  getData(2018, 61240, 'TAVG').then(
+    function(json){
+      console.log(avg = parseJSON(json));
+  });
 }
 
-function getAverageTempList(yearBorn, zipcode)
+function parseJSON(json)
 {
-  for(i = yearBorn; i < 2019; ++i)
+  var arr = [];
+  for(i = 0; i < json['results'].length; i++)
   {
-    var response = getData(i, zipcode);
+    arr[arr.length] = json['results'][i]['value'];
   }
+  return averageArray(arr);
 }
 
-function getAveragePrecipList(yearBorn, zipcode)
-{}
-async function getData(yearBorn = '', zipcode = '') {
-  url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datatypeid=PRCP&datasetid=GSOM&locationid=ZIP:' + zipcode + "&startdate=" + yearBorn + "-01-01&enddate=" + yearBorn + "-12-31";
+function averageArray(option){
+  var answer = 0;
+  var len = option.length;
+  for( i = 0; i<len; i++){
+    answer+= option[i];
+  }
+  return (answer / option.length);
+}
+
+async function getData(yearBorn = '', zipcode = '', dataType = '') {
+  url = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?limit=1000&datatypeid=' + dataType +'&datasetid=GSOM&locationid=ZIP:' + zipcode + "&startdate=" + yearBorn + "-01-01&enddate=" + yearBorn + "-12-31";
   // Default options are marked with *
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
