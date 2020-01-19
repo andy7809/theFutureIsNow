@@ -7,10 +7,30 @@
   box-sizing: border-box;
 }
 
+#hit{
+  font-family: Arial;
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+
+  cursor: pointer;
+
+}
+#hi{
+  font-family: Arial;
+  width: 100px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+
+  cursor: pointer;
+
+}
 body {
   margin: 0;
   font-family: Arial;
-  font-size: 27px;
+  font-size: 20px;
 }
 
 #myVideo {
@@ -55,28 +75,29 @@ body {
 </video>
 
 <div class="content">
+  <center>
   <h1 id = "title">The Future Is Now </h1>
+</center>
   <p id = "bodyText">
-  Omaha's rain fall during this time was : *number to find* the implications of this are xyz</p>
-  <button id="myBtn" onclick="myFunction()">Next</button>
+See climate changes' effect on the past and the present on your particular location. Then, see your possible future</p>
+<input type = "text" value = "Enter zip" id="hi">
+<input type = "text" value = "Enter city"  id="hit">
+
+  <button id="myBtn" onclick="myFunction()">Get Started </button>
 </div>
 
 <script>
-var video = document.getElementById("myVideo");
-var btn = document.getElementById("myBtn");
-var title = document.getElementById("title");
-var body = document.getElementById("bodyText");
+
 // source.setAttribute('src', 'rain.mp4');
-var x = 0;
-var city = "Omaha";
-var d = new Date();
-var year = d.getFullYear();;
-var pastOffset = 20;
-var futureOffset = 16;
 
 
+  var zip;
+  var city;
 function myFunction() {
-
+   zip = document.getElementById("hi").value;
+   city = document.getElementById("hit").value;
+   var queryString = "?" + zip + "&" + city;
+   window.location.href = "vidB.html" + queryString;
 }
 function load(){
 }

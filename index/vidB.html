@@ -108,6 +108,13 @@ if(x>4){
 x++;
 }
 function load(){
+  var queryString = decodeURIComponent(window.location.search);
+  queryString = queryString.substring(1);
+  var queries = queryString.split("&");
+  city = queries[1];
+  zip = queries[0];
+  console.log(city + " " + zip);
+
   var title = document.getElementById("title");
   title.innerHTML = "Average rainfall for " + city + " in " + (year-pastOffset);
   body.innerHTML = "an average rain fall of " + rainfall + " is typical of the" + city + " area, and follows the expected trends. Rainfall at this level reflects a healthy envionrment and planet in the year " + (year-pastOffset);
