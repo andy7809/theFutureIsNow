@@ -100,6 +100,7 @@ if(x==1){
       body.innerHTML ="Today, we are seeing drastic increases in temperature, which have many adverse impacts on human life. The temperature for " + city + " fell above the average in " + year + " although this is just one year, it indicates the gradual increase we are seeing in temperature";
   }
   else{
+    body.innerHTML ="The precip for " + city + " falls with in the average predicted temperature";
       video.src = "daisy.mp4";
   }
 }
@@ -108,6 +109,9 @@ if(x==2){
   if(rainfall> avPrecip+.2){
     video.src = "HighRain.mp4";
     body.innerHTML = "Climate change increases the chances of catastrophic climate events. The warmer air holds more moisture, thus there is an increase in precipitation. This can be seen in a 67 percent increase in precipitation Northeast, 31 percent incerease in the Midwest and 15 percent increase in the Great Plains ";
+  }
+  else{
+    body.innerHTML ="The precipitation for " + city + " falls with in the average predicted precipitation";
   }
 }
 if (x==3){
