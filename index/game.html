@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>canvas practice</title>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+</head>
+<style>
+  canvas{
+    background-image: url('https://opengameart.org/sites/default/files/background_18.png');
+    background-color:white;
+    border-color:black;
+    border: 1px solid;
+  }
+  </style>
+<body onload="startgame()">
+  <script>
+  var GamePiece;
+  function startgame(){
+    stage.start();
+      GamePiece= new component(100,100,"sprite RD.png", 70,500,"image",false, false,false);
+      cloud= new component(200,200,"cloud.png", 70,40,"image");
+      raindrop= new component(40,40,"drop.png", 100,100,"image");
+      quest=new component("25px","cursive ","black", 50, 500/2,"text");
+      quest2=new component("25px","cursive ","black", 50, (500/2) + 25,"text");
+      quest3=new component("25px","cursive ","black", 50, (500/2) + 50,"text");
+      fire= new component(300,200,"fire.png", 1200,400,"image",false);
+
+
+
+      quest.text = "Climate change has caused bush fires to become more common ";
+      quest2.text =  "it's your job to use the water from the clouds to put the fire out before its too late";
+      quest3.text = "press enter to begin";
+
+
+  }
+  // //e
+  // 350,300,
+  var stage = {
+    canvas :document.createElement("canvas"),
+    //creates canvas-- also uses the start function as declared above to generate this
+    start : function(){
+      this.canvas.width=1500;
+      this.canvas.height=500;
+      //sets everything
+      this.context=this.canvas.getContext("2d");
+      //2d rendering space
+      document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+      //sets it as the first thing on the page
+      this.interval=setInterval(stageUpdate,20);
+      //updates every 20 miliseconds
+      window.addEventListener('keydown',function(e){
+        //keys up or down
+        stage.key=e.keyCode;
+      })
+      window.addEventListener('keyup',function(e){
+        stage.key=false;
+      })
+    },
+    clear : function(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    }
+    function component(width, height, color, x, y, type, bucketStatus, isUp, hasWon) {
+      hasWon = hasWon;
+      this.isUp = isUp;
+      this.bucketStatus = bucketStatus;
+          this.type=type;
+            if (type == "image") {
+                this.image = new Image();
+                this.image.src = color;
+                }
+              this.gamearea = stage;
+              this.width = width;
+              this.height = height;
+              this.speedX = 0;
+              this.speedY = 0;
+              this.gravity = 5;
+              this.gravitySpeed=0;
+              this.x = x;
+              this.y = y;
+              this.update = function() {
+                ctx = stage.context;
+                if(type=="image"){
+                  ctx.drawImage(this.image,
+                    this.x,
+                    this.y,
+                    this.width, this.height);
+                }
+                else if(type=="text"){
+                    ctx.font = this.width + " " + this.height;
+                    ctx.fillStyle = color;
+                    ctx.fillText(this.text, this.x, this.y);
+                  }
+                else{
+                  ctx.fillStyle = color;
+                  ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+          }
+          this.newPos = function() {
+              this.gravitySpeed = this.gravity;
+              this.x += this.speedX;
+              this.y += this.speedY+this.gravitySpeed;
+              this.ground();
+        }
+        this.ground = function(){
+          var theground= stage.canvas.height-this.height;
+          if(this.y>theground+1){
+            this.y=theground-1;
+          }
+        }
+     this.crash = function(otherthing){
+       var pieceright =this.x+(this.width);
+       var pieceleft =this.x;
+       var piecetop = this.y;
+       var piecebot = this.y+(this.height);
+       var otherright = otherthing.x+(otherthing.width);
+       var otherleft =otherthing.x;
+       var othertop = otherthing.y;
+       var crash=true;
+       var otherbottom = otherthing.y+(otherthing.height);
+       if ((piecebot < othertop) || (piecetop > otherbottom) || (pieceright < otherleft) || (pieceleft > otherright)) {
+           crash = false;
+         }
+      else{
+
+           return crash;
+         }
+
+     }
+      }
+    function walkADirection(){
+      //key for the keys (puns)
+      //39-- right
+      //37--left
+      //38--up
+      if (stage.key==13){
+        quest.x = 10000;
+        quest2.x = 10000;
+        quest3.x = 10000;
+      }
+      if (stage.key==39){
+        GamePiece.image.src="sprite RD.png";
+        GamePiece.x+=4;
+        if(GamePiece.isUp){
+          GamePiece.y-=4;
+          // GamePiece.image.src="sprite RD.png";
+          GamePiece.isUp = false;
+        }
+        else{
+          GamePiece.y+=4;
+          // GamePiece.image.src="sprite RU.png";
+          GamePiece.isUp = true;
+
+        }
+      }
+    if (stage.key==37){
+      GamePiece.x-=4;
+      GamePiece.image.src="spriteLeftGif.gif";
+      if(GamePiece.isUp){
+        GamePiece.y-=4;
+        // GamePiece.image.src="sprite RD.png";
+        GamePiece.isUp = false;
+      }
+      else{
+        GamePiece.y+=4;
+        // GamePiece.image.src="sprite RU.png";
+        GamePiece.isUp = true;
+
+      }
+    }
+    if (stage.key==38){
+      GamePiece.y=GamePiece.y-4;
+      GamePiece.y-=10;
+
+    }
+  }
+    function wait(ms){
+      var d = new Date();
+      var d2 = null;
+      do{ d2= new Date();}
+      while(d2-d<ms)
+    }
+
+
+function updatePieces(){
+
+  if(fire.isUp){
+    fire.y-=5;
+    fire.x-=5;
+    // GamePiece.image.src="sprite RD.png";
+    fire.isUp = false;
+  }
+  else{
+    fire.y+=5;
+    fire.x+=5;
+
+    // GamePiece.image.src="sprite RU.png";
+    fire.isUp = true;
+
+  }
+  GamePiece.update();
+  if(GamePiece.hasWon){
+    window.open("https://www.w3schools.com", '_blank');
+    return;
+  }
+
+  if(GamePiece.crash(fire)){
+    if(GamePiece.bucketStatus){
+      fire.y++;
+      GamePiece.hasWon = true;
+    }
+    else{
+      wait(100);
+      alert("game over");
+      return;
+    }
+  }
+  if(raindrop.y<1000 && !(raindrop.crash(GamePiece))){
+    raindrop.y++;
+  }
+  else{
+    if(raindrop.crash(GamePiece)){
+      GamePiece.bucketStatus = true;
+    }
+    raindrop.y = 60;
+  }
+  raindrop.update();
+  cloud.update();
+  quest.update();
+  quest2.update();
+  quest3.update();
+  fire.update();
+
+}
+
+  function stageUpdate(){
+    stage.clear();
+  walkADirection();
+    GamePiece.newPos();
+    GamePiece.speedX = 0;
+    GamePiece.speedY = 0;
+    updatePieces();
+
+    // console.log(GamePiece.y);
+
+    // GamePiece.update();
+    // block.update();
+    //thread.sleep
+  }
+  platform1.update();
+</script>
+</body>
+</html>
