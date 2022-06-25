@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "bluebird": "^3.7.2",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {},
   "scripts": {
